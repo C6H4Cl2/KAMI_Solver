@@ -49,12 +49,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardTest.cs" />
-    <Compile Include="GameBoardLoaderTest.cs" />
+    <Compile Include="Factory\BoardGraphFactoryTests.cs" />
+    <Compile Include="Model\BoardGraphTests.cs" />
+    <Compile Include="Model\ColorBlockTests.cs" />
+    <Compile Include="Model\SolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolverTest.cs" />
-    <Compile Include="StateTest.cs" />
-    <Compile Include="TileTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -8,49 +8,36 @@ namespace KAMI_Solver.Model
 {
     public class Board
     {
-        public int width { get; }
-        public int height { get; }
+        public int Width { get; }
+        public int Height { get; }
 
         private Tile[,] tiles;
 
         public Board(int _width, int _height)
         {
-            width = _width;
-            height = _height;
-            tiles = new Tile[width, height];
+            Width = _width;
+            Height = _height;
+            tiles = new Tile[Width, Height];
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                    tiles[x, y] = new Tile();
+            for (int x = 0; x < Width; x++)
+                for (int y = 0; y < Height; y++)
+                    tiles[x, y] = new Tile(0, x, y);
         }
 
         public Board(int[,] colors)
         {
-            width = colors.GetLength(0);
-            height = colors.GetLength(1);
-            tiles = new Tile[width, height];
+            Width = colors.GetLength(0);
+            Height = colors.GetLength(1);
+            tiles = new Tile[Width, Height];
 
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    tiles[x, y] = new Tile(colors[x, y]);
-                }
+            for (int x = 0; x < Width; x++)
+                for (int y = 0; y < Height; y++)
+                    tiles[x, y] = new Tile(colors[x, y], x, y);
         }
 
-        public Board(Board board)
+        public Tile GetTileAt(int x, int y)
         {
-            width = board.width;
-            height = board.height;
-            tiles = new Tile[width, height];
-
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                    tiles[x, y] = new Tile(board.getTileAt(x, y));
-        }
-
-        public Tile getTileAt(int x, int y)
-        {
-            if (x < 0 || y < 0 || x >= width || y >= height) return null;
+            if (x < 0 || y < 0 || x >= Width || y >= Height) return null;
 
             return tiles[x, y];
         }

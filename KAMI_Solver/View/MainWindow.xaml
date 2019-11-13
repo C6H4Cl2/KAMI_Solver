@@ -6,36 +6,43 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:KAMI_Solver"
         mc:Ignorable="d"
-        Title="KAMI solver" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="KAMI solver" SizeToContent="WidthAndHeight" ResizeMode="CanResize">
   <Window.Resources>
-    <sys:Double x:Key="tileLength">110</sys:Double>
+    <sys:Double x:Key="tileLength">70</sys:Double>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition/>
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition/>
       <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
 
-    <Border BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="5">
+    <Border Name="TableGridBoard" BorderThickness="1" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
       <Grid Name="TableGrid">
         <Grid.Resources>
           <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Property="MaxWidth" Value="{StaticResource tileLength}"/>
-            <Setter Property="MaxHeight" Value="{StaticResource tileLength}"/>
+            <Setter Property="MinHeight" Value="{StaticResource tileLength}"/>
+            <Setter Property="MinWidth" Value="{StaticResource tileLength}"/>
+            <Setter Property="Height" Value="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"/>
+            <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
           </Style>
         </Grid.Resources>
       </Grid>
     </Border>
 
     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center">
-      <Button Content="Solve" Margin="0,0,0,10" />
-      <Button Content="Reset" Margin="0,0,0,10" />
+      <Button Content="Solve" Margin="0,0,0,10" Click="Solve_Click" />
+      <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
+        <TextBlock Text="Max Steps: " HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox x:Name="maxSteps_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Text="-1" TextAlignment="Center"/>
+      </StackPanel>
+      <Button Content="Reset" Margin="0,0,0,10" Click="Reset_Click" />
+      <Button Content="Load from xml" Margin="0,0,0,10" Click="LoadXml_Click" />
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBox x:Name="col_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Text="5" TextAlignment="Center"/>
         <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace KAMI_Solver.ViewModel
+namespace KAMI_Solver.Factory
 {
     public class GameBoardLoader
     {
-        static public Board Load(string dataPath)
+        static public Board Load(string dataPath, out int[,] colors)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(dataPath);
@@ -20,12 +20,11 @@ namespace KAMI_Solver.ViewModel
 
             try
             {
-
                 int width = Convert.ToInt32(root.Attributes["width"].Value);
                 int height = Convert.ToInt32(root.Attributes["height"].Value);
                 string colours = root.Attributes["colours"].Value;
 
-                int[,] colors = new int[width, height];
+                colors = new int[width, height];
                 for (int y = 0; y < colors.GetLength(1); y++)
                 {
                     for (int x = 0; x < colors.GetLength(0); x++)
@@ -42,6 +41,11 @@ namespace KAMI_Solver.ViewModel
                 Debug.WriteLine(ex.Message);
                 throw ex;
             }
+        }
+
+        static public Board Load(string dataPath)
+        {
+            return Load(dataPath, out _);
         }
     }
 }

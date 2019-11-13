@@ -1,0 +1,11 @@
+<PuzzleData name="SBL9_SplattedBug" width="16" height="10" numColours="4" colours="3333321441233333322422144122422332242111111242233443233443323443311131122113111331113112211311131443133443313441322411111111422312241113311142214131313333131314" gold="7" silver="8" bronze="9">
+    <Solution length="7">
+        <Turn x="7" y="7" colour="3"/>
+        <Turn x="10" y="8" colour="1"/>
+        <Turn x="3" y="5" colour="3"/>
+        <Turn x="13" y="5" colour="2"/>
+        <Turn x="7" y="8" colour="3"/>
+        <Turn x="7" y="8" colour="1"/>
+        <Turn x="7" y="8" colour="4"/>
+    </Solution>
+</PuzzleData>
