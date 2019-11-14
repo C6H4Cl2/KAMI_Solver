@@ -171,7 +171,7 @@ namespace KAMI_Solver
             }
         }
 
-        private void Solve_Click(object sender, RoutedEventArgs e)
+        async private void Solve_Click(object sender, RoutedEventArgs e)
         {
             Button solveBtn = sender as Button;
             solveBtn.IsEnabled = false;
@@ -193,9 +193,9 @@ namespace KAMI_Solver
 
                 Board boardArray = new Board(board);
                 BoardGraph boardGraph = BoardGraphFactory.createFromBoard(boardArray);
-                List<Step> solutions = solver.solve(boardGraph);
-                if (solutions != null)  solutionString = string.Join(System.Environment.NewLine, solutions);
-                
+                List<Step> solutions = await Task.Run(()=> solver.solve(boardGraph));
+                if (solutions != null) solutionString = string.Join(System.Environment.NewLine, solutions);
+
                 MessageBox.Show(solutionString, "Solution");
                 solveBtn.IsEnabled = true;
             }
@@ -242,18 +242,18 @@ namespace KAMI_Solver
             // Display OpenFileDialog by calling ShowDialog method 
             bool? result = dlg.ShowDialog();
 
-                // Get the selected file name and display in a TextBox 
-                if (result == true)
-                {
-                    // Open document 
-                    string fileName = dlg.FileName;
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string fileName = dlg.FileName;
 
-                    GameBoardLoader.Load(fileName, out int[,] colors);
-                    board = colors;
+                GameBoardLoader.Load(fileName, out int[,] colors);
+                board = colors;
 
-                    UpdateTableGridView();
-                }
-            
+                UpdateTableGridView();
+            }
+
         }
     }
 }

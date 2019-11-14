@@ -33,5 +33,35 @@ namespace KAMI_Solver.Model.Tests
             ColorBlock cb2 = new ColorBlock(200, 1, 2);
             Assert.IsTrue(testHashSet.Contains(cb2));
         }
+
+        [TestMethod()]
+        public void GetDistanceToTheFarthestTest()
+        {
+            ColorBlock cb1 = new ColorBlock(100, 1, 0);
+            ColorBlock cb2 = new ColorBlock(200, 1, 1);
+            ColorBlock cb3 = new ColorBlock(300, 2, 2);
+
+            cb1.AddNeighbour(cb2);
+            cb2.AddNeighbour(cb1);
+
+            cb2.AddNeighbour(cb3);
+            cb3.AddNeighbour(cb2);
+
+            int farthestDistance = cb1.GetDistanceToTheFarthest(out ColorBlock cb);
+
+            Assert.AreEqual(farthestDistance, 2);
+            Assert.AreEqual(cb3, cb);
+        }
+
+        [TestMethod()]
+        public void GetDistanceToTheFarthestTest2()
+        {
+            ColorBlock cb1 = new ColorBlock(100, 1, 0);
+
+            int farthestDistance = cb1.GetDistanceToTheFarthest(out ColorBlock cb);
+
+            Assert.AreEqual(farthestDistance, 0);
+            Assert.AreEqual(cb1, cb);
+        }
     }
 }

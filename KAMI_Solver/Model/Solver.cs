@@ -35,6 +35,7 @@ namespace KAMI_Solver.Model
                 return new List<Step>(); // find solution
             }
 
+            // heuristic algorithm - cut branch
             int colorLeft = graph.GetColorLeft();
             if (maxSteps < colorLeft - 1 + stepCount)
             {
@@ -44,8 +45,17 @@ namespace KAMI_Solver.Model
             var candidateSteps = graph.GetCandidateSteps();
             foreach (var step in candidateSteps)
             {
+
+                var selectedColorBlock = step.ColorBlock;
+
+                // heuristic algorithm - cut branch
+                var farthestDist = selectedColorBlock.GetDistanceToTheFarthest(out _);
+                int leftSteps = maxSteps - stepCount;
+                if (farthestDist > maxSteps - stepCount) continue;
+
+                // try next step
                 var newGraph = graph.Clone(); 
-                newGraph.ChangeColor(step.ColorBlock, step.NewColor);
+                newGraph.ChangeColor(selectedColorBlock, step.NewColor);
                 List<Step> solution = solveHelper(newGraph, stepCount + 1);
                 if (solution != null)
                 {

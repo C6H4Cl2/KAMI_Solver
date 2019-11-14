@@ -100,6 +100,38 @@ namespace KAMI_Solver.Model
             return mergedNeighbours;
         }
 
+        public int GetDistanceToTheFarthest(out ColorBlock farthestColorBlock)
+        {
+            Queue<ColorBlock> queue = new Queue<ColorBlock>();
+            queue.Enqueue(this);
+            HashSet<ColorBlock> visited = new HashSet<ColorBlock>();
+            visited.Add(this);
+
+            int distance = 0;
+            farthestColorBlock = null; // default value
+            while (queue.Count > 0)
+            {
+                Queue<ColorBlock> nextLevelQueue = new Queue<ColorBlock>();
+                while (queue.Count > 0)
+                {
+                    farthestColorBlock = queue.Dequeue();
+                    foreach (ColorBlock farther in farthestColorBlock.Neighbours)
+                    {
+                        if (!visited.Contains(farther))
+                        {
+                            nextLevelQueue.Enqueue(farther);
+                            visited.Add(farther);
+                        }
+                    }
+                }
+                distance++;
+                queue = nextLevelQueue;
+            }
+
+            return distance-1;
+            
+        }
+
         public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
