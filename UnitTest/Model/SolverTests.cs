@@ -24,7 +24,7 @@ namespace KAMI_Solver.Model.Tests
             Solver solver = new Solver();
             solver.MaxSteps = 2;
 
-            List<Step> solution = solver.solve(boardGraph);
+            List<Step> solution = solver.Solve(boardGraph);
             Assert.IsNotNull(solution);
         }
     }

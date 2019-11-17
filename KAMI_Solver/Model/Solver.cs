@@ -4,32 +4,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KAMI_Solver.Model
 {
     public class Solver
     {
-        private int maxSteps = Int32.MaxValue; // init with max steps
+        private int maxSteps = int.MaxValue; // init with max steps
         public int MaxSteps { set { this.maxSteps = value; } }
 
-        public Solver() { }
+        private readonly CancellationTokenSource ts;
 
-        public List<Step> solve(Board board)
-        {
-            BoardGraph graph = BoardGraphFactory.createFromBoard(board);
-            return solve(graph);
+        public Solver() {
+            ts = new CancellationTokenSource();
         }
 
-        public List<Step> solve(BoardGraph graph)
+        public List<Step> Solve(Board board)
         {
-            List<Step> solution = solveHelper(graph, 0);
+            BoardGraph graph = BoardGraphFactory.createFromBoard(board);
+            return Solve(graph);
+        }
+
+        public List<Step> Solve(BoardGraph graph)
+        {
+            List<Step> solution = SolveHelper(graph, 0);
             if(solution != null) solution.Reverse();
             return solution;
         }
 
-        private List<Step> solveHelper(BoardGraph graph, int stepCount)
+        private List<Step> SolveHelper(BoardGraph graph, int stepCount)
         {
+            // if the task is cancelled
+            if (ts.Token.IsCancellationRequested) return null;
+
             if (graph.ColorBlocks.Count <= 1)
             {
                 return new List<Step>(); // find solution
@@ -56,7 +64,7 @@ namespace KAMI_Solver.Model
                 // try next step
                 var newGraph = graph.Clone(); 
                 newGraph.ChangeColor(selectedColorBlock, step.NewColor);
-                List<Step> solution = solveHelper(newGraph, stepCount + 1);
+                List<Step> solution = SolveHelper(newGraph, stepCount + 1);
                 if (solution != null)
                 {
                     solution.Add(step);
@@ -65,6 +73,11 @@ namespace KAMI_Solver.Model
             }
 
             return null; // cannot find solution in this branch
+        }
+
+        public void Cancel()
+        {
+            if(ts != null) ts.Cancel(); 
         }
     }
 }

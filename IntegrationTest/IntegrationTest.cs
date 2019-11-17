@@ -21,7 +21,7 @@ namespace IntegrationTest
                 {
                     MaxSteps = 7
                 };
-                List<Step> solutions = solver.solve(board);
+                List<Step> solutions = solver.Solve(board);
 
                 Assert.IsNotNull(solutions);
             }
@@ -44,7 +44,7 @@ namespace IntegrationTest
                 {
                     MaxSteps = 7
                 };
-                List<Step> solutions = solver.solve(board);
+                List<Step> solutions = solver.Solve(board);
 
                 Assert.AreNotEqual(0, solutions.Count);
             }
@@ -66,7 +66,7 @@ namespace IntegrationTest
                 {
                     MaxSteps = 6
                 };
-                List<Step> solutions = solver.solve(board);
+                List<Step> solutions = solver.Solve(board);
 
                 Assert.AreNotEqual(0, solutions.Count);
             }

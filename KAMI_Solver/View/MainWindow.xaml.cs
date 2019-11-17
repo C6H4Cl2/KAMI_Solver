@@ -1,5 +1,6 @@
 ﻿using KAMI_Solver.Factory;
 using KAMI_Solver.Model;
+using KAMI_Solver.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KAMI_Solver
+namespace KAMI_Solver.View
 {
     /// <summary>
     /// Main Window
@@ -193,10 +195,22 @@ namespace KAMI_Solver
 
                 Board boardArray = new Board(board);
                 BoardGraph boardGraph = BoardGraphFactory.createFromBoard(boardArray);
-                List<Step> solutions = await Task.Run(()=> solver.solve(boardGraph));
-                if (solutions != null) solutionString = string.Join(System.Environment.NewLine, solutions);
 
+                WaitPopup popup = new WaitPopup()
+                {
+                    Owner = this
+                };
+                popup.Closed += (s, eve) => {
+                    solver.Cancel();
+                };
+                popup.Show();
+
+                List<Step> solutions = await Task.Run(()=> solver.Solve(boardGraph));
+
+                popup.Close();
+                if (solutions != null && solutions.Count > 0) solutionString = string.Join(System.Environment.NewLine, solutions);
                 MessageBox.Show(solutionString, "Solution");
+
                 solveBtn.IsEnabled = true;
             }
         }
