@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace KAMI_Solver.Model
 {
-    public class Solver
+    public class Solver : IDisposable
     {
         private int maxSteps = int.MaxValue; // init with max steps
         public int MaxSteps { set { this.maxSteps = value; } }
 
-        private readonly CancellationTokenSource ts;
+        private CancellationTokenSource ts;
 
-        public Solver() {
+        public Solver()
+        {
             ts = new CancellationTokenSource();
         }
 
@@ -29,7 +30,7 @@ namespace KAMI_Solver.Model
         public List<Step> Solve(BoardGraph graph)
         {
             List<Step> solution = SolveHelper(graph, 0);
-            if(solution != null) solution.Reverse();
+            if (solution != null) solution.Reverse();
             return solution;
         }
 
@@ -62,7 +63,7 @@ namespace KAMI_Solver.Model
                 if (farthestDist > maxSteps - stepCount) continue;
 
                 // try next step
-                var newGraph = graph.Clone(); 
+                var newGraph = graph.Clone();
                 newGraph.ChangeColor(selectedColorBlock, step.NewColor);
                 List<Step> solution = SolveHelper(newGraph, stepCount + 1);
                 if (solution != null)
@@ -77,7 +78,29 @@ namespace KAMI_Solver.Model
 
         public void Cancel()
         {
-            if(ts != null) ts.Cancel(); 
+            if (ts != null) ts.Cancel();
+        }
+
+        // refer: https://docs.microsoft.com/en-ca/visualstudio/code-quality/ca1063-implement-idisposable-correctly?view=vs-2015
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // CancellationTokenSource needs to implements "IDisposable"
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && ts != null)
+            {
+                ts.Dispose();
+                ts = null;
+            }
+        }
+
+        ~Solver()
+        {
+            Dispose(false);
         }
     }
 }

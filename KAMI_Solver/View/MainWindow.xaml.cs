@@ -192,7 +192,7 @@ namespace KAMI_Solver.View
             }
             finally
             {
-                string solutionString = "Cannot find a solution.\n(Please give more steps)";
+                string solutionString = "Cannot find a solution.";
 
                 Board boardArray = new Board(board);
                 BoardGraph boardGraph = BoardGraphFactory.createFromBoard(boardArray);
@@ -207,6 +207,7 @@ namespace KAMI_Solver.View
                 popup.Show();
 
                 List<Step> solutions = await Task.Run(()=> solver.Solve(boardGraph));
+                solver.Dispose();
 
                 popup.Close();
                 if (solutions != null && solutions.Count > 0) solutionString = string.Join(System.Environment.NewLine, solutions);
