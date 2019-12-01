@@ -44,9 +44,9 @@
       <Button Content="Reset" Margin="0,0,0,10" Click="Reset_Click" />
       <Button Content="Load from xml" Margin="0,0,0,10" Click="LoadXml_Click" />
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox x:Name="col_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Text="5" TextAlignment="Center"/>
+        <TextBox x:Name="col_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Text="7" TextAlignment="Center"/>
         <TextBlock Text="x" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox x:Name="row_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Margin="0,0,10,0" Text="4" TextAlignment="Center"/>
+        <TextBox x:Name="row_textBox" Height="25" TextWrapping="NoWrap" VerticalAlignment="Center" Width="40" Margin="0,0,10,0" Text="7" TextAlignment="Center"/>
         <Button x:Name="setRowCol_btn" Height="25" VerticalAlignment="Bottom" Width="40" Content="Set" Click="SetRowCol_btn_Click"/>
       </StackPanel>
     </StackPanel>

@@ -132,6 +132,7 @@ namespace KAMI_Solver.View
                 {
                     Button button = new Button()
                     {
+                        Content = string.Format("{0}, {1}", c, r),
                         Background = candidateColors[board[c, r]]
                     };
 
