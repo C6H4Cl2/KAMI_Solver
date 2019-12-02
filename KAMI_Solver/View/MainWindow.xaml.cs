@@ -264,8 +264,9 @@ namespace KAMI_Solver.View
                 // Open document 
                 string fileName = dlg.FileName;
 
-                GameBoardLoader.Load(fileName, out int[,] colors);
+                GameBoardLoader.Load(fileName, out int[,] colors, out int maxSteps);
                 board = colors;
+                maxSteps_textBox.Text = maxSteps.ToString();
 
                 UpdateTableGridView();
             }

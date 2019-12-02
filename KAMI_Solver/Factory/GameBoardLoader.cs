@@ -11,15 +11,24 @@ namespace KAMI_Solver.Factory
 {
     public class GameBoardLoader
     {
-        static public Board Load(string dataPath, out int[,] colors)
+        static public Board Load(string dataPath, out int[,] colors, out int maxSteps)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(dataPath);
-
-            XmlElement root = doc.DocumentElement;
 
             try
             {
+                // refer: https://stackoverflow.com/questions/1874132/how-to-remove-all-comment-tags-from-xmldocument
+                XmlReaderSettings readerSettings = new XmlReaderSettings()
+                {
+                    IgnoreComments = true
+                };
+                XmlReader reader = XmlReader.Create(dataPath, readerSettings);
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reader);
+
+                XmlElement root = doc.DocumentElement;
+                maxSteps = root.FirstChild.ChildNodes.Count;
+
                 int width = Convert.ToInt32(root.Attributes["width"].Value);
                 int height = Convert.ToInt32(root.Attributes["height"].Value);
                 string colours = root.Attributes["colours"].Value;
@@ -39,13 +48,8 @@ namespace KAMI_Solver.Factory
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                throw ex;
+                throw new Exception("Cannot load xml file");
             }
-        }
-
-        static public Board Load(string dataPath)
-        {
-            return Load(dataPath, out _);
         }
     }
 }

@@ -16,10 +16,10 @@ namespace IntegrationTest
 
             try
             {
-                Board board = GameBoardLoader.Load(dataPath);
+                Board board = GameBoardLoader.Load(dataPath, out _, out int maxSteps);
                 Solver solver = new Solver
                 {
-                    MaxSteps = 7
+                    MaxSteps = maxSteps
                 };
                 List<Step> solutions = solver.Solve(board);
 
@@ -39,10 +39,10 @@ namespace IntegrationTest
 
             try
             {
-                Board board = GameBoardLoader.Load(dataPath);
+                Board board = GameBoardLoader.Load(dataPath, out _, out int maxSteps);
                 Solver solver = new Solver
                 {
-                    MaxSteps = 7
+                    MaxSteps = maxSteps
                 };
                 List<Step> solutions = solver.Solve(board);
 
@@ -61,10 +61,10 @@ namespace IntegrationTest
 
             try
             {
-                Board board = GameBoardLoader.Load(dataPath);
+                Board board = GameBoardLoader.Load(dataPath, out _, out int maxSteps);
                 Solver solver = new Solver
                 {
-                    MaxSteps = 6
+                    MaxSteps = maxSteps
                 };
                 List<Step> solutions = solver.Solve(board);
 
